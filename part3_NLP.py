@@ -42,6 +42,23 @@ sent_text = nltk.sent_tokenize(raw)
 sent_text = [word.lower() for word in sent_text]
 
 summary = [] # array hold sentences that have the top 5 most repeated bigrams
+
+#Option 1: gives better results no sentence duplication
+ordered_sent = set()  # using set() to prevent getting duplicate sentences that contain one of the top bigrams
+
+for i in range(4):
+    for sent in sent_text:
+        if bg1[i][0] and bg1[i][1] in word_tokenize(sent):
+            if sent not in ordered_sent:
+                ordered_sent.add(sent)
+                summary.append(sent)
+
+# for sent in summary:
+#     print (sent.strip('\n').strip('\t'))
+
+print(*ordered_sent)
+
+#Option2: prints repeated non-ordered senteces
 for i in range(5):
     for sent in sent_text:
         if bg1[i][0] and bg1[i][1] in word_tokenize(sent):
